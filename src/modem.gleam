@@ -31,6 +31,9 @@ pub type Options {
     /// the external link!
     ///
     handle_external_links: Bool,
+    /// Dispatch the route change on init
+    ///
+    dispatch_on_init: Bool,
   )
 }
 

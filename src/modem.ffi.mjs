@@ -9,6 +9,7 @@ const defaults = {
 };
 
 // EXPORTS ---------------------------------------------------------------------
+//
 
 export const do_init = (dispatch, options = defaults) => {
   document.body.addEventListener("click", (event) => {
@@ -59,10 +60,28 @@ export const do_init = (dispatch, options = defaults) => {
 
     dispatch(uri);
   });
+
+  window.addEventListener("onpushstate", (event) => {
+    dispatch(event.detail.uri);
+  })
+
+  if (options.dispatch_on_init) {
+    const url = new URL(window.location.href);
+    const uri = uri_from_url(url);
+    dispatch(uri);
+  }
 };
 
 export const do_push = (uri) => {
   window.history.pushState({}, "", to_string(uri));
+
+  const pushChangeEvent = new CustomEvent("onpushstate", {
+    detail: {
+      uri
+    }
+  });
+  window.dispatchEvent(pushChangeEvent);
+
   window.requestAnimationFrame(() => {
     if (uri.fragment[0]) {
       document.getElementById(uri.fragment[0])?.scrollIntoView();
