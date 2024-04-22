@@ -129,6 +129,10 @@ export const do_back = (steps) => {
 // UTILS -----------------------------------------------------------------------
 
 const find_anchor = (el) => {
+  if (!el) {
+    return null;
+  }
+
   if (el.tagName === "BODY") {
     return null;
   } else if (el.tagName === "A") {
