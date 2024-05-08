@@ -13,6 +13,11 @@ const defaults = {
 
 export const do_init = (dispatch, options = defaults) => {
   document.body.addEventListener("click", (event) => {
+    // don't highjack new tab/window clicks
+    if (event.shiftKey || event.ctrlKey || event.metaKey) {
+      return;
+    }
+
     const a = find_anchor(event.target);
 
     if (!a) return;
